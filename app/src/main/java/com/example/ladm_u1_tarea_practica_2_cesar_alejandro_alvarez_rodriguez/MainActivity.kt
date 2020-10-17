@@ -1,25 +1,29 @@
 package com.example.ladm_u1_tarea_practica_2_cesar_alejandro_alvarez_rodriguez
 
 import android.content.Context
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
+import java.io.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),0)
+        }
 
         btnguardar.setOnClickListener {
             if(rbmemoriaint.isChecked){
                 if(guardarEnMemoriaInterna()==true){
-                    Toast.makeText(this,"Memoria Interna", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Memoria Interna", Toast.LENGTH_SHORT).show()
                     AlertDialog.Builder(this).setTitle("Atencion")
                         .setMessage("Se guardo el archivo").setPositiveButton("Ok"){d,i->d.dismiss()}
                         .show()
@@ -30,10 +34,14 @@ class MainActivity : AppCompatActivity() {
                 texto.setText("")
             }
             if(rbmemoriasd.isChecked){
-                Toast.makeText(this,"Memoria Externa", Toast.LENGTH_LONG).show()
-                AlertDialog.Builder(this).setTitle("Atencion")
-                    .setMessage("Se guardo el archivo").setPositiveButton("Ok"){d,i->d.dismiss()}
-                    .show()
+                Toast.makeText(this,"Memoria Externa", Toast.LENGTH_SHORT).show()
+                if(guardarEnMemoriaExterna()==true){
+                    AlertDialog.Builder(this).setTitle("Atencion").setMessage("Se guardo el archivo en SD")
+                        .setPositiveButton("Ok"){d,i-> d.dismiss()}.show()
+                }else{
+                    android.app.AlertDialog.Builder(this).setTitle("ERROR").setMessage("NO se guardo el archivo")
+                        .setPositiveButton("Ok"){d,i-> d.dismiss()}.show()
+                }
             }
         }
 
@@ -51,11 +59,46 @@ class MainActivity : AppCompatActivity() {
             }
             if(rbmemoriasd.isChecked){
                 Toast.makeText(this,"Memoria Externa", Toast.LENGTH_LONG).show()
-                AlertDialog.Builder(this).setTitle("Atencion")
-                    .setMessage("Se abrira el archivo").setPositiveButton("Ok"){d,i->d.dismiss()}
-                    .show()
+                if(abrirEnMemoriaExterna()==true){
+                    AlertDialog.Builder(this).setTitle("Atencion").setMessage("Se abrio el archivo desde SD")
+                        .setPositiveButton("Ok"){d,i-> d.dismiss()}.show()
+                }else{
+                    android.app.AlertDialog.Builder(this).setTitle("ERROR").setMessage("NO se pudo abrir el archivo")
+                        .setPositiveButton("Ok"){d,i-> d.dismiss()}.show()
+                }
             }
         }
+    }
+
+    private fun abrirEnMemoriaExterna(): Boolean {
+        try{
+            var rutaSD= Environment.getExternalStorageDirectory()
+            var f = File(rutaSD.absolutePath, textnombredoc.text.toString())
+            var ff = BufferedReader(InputStreamReader(FileInputStream(f)))
+
+            var contenido = ""
+            contenido=ff.readLine().toString()
+            texto.setText(contenido)
+            ff.close()
+        }catch (io: Exception){
+            return false;
+        }
+        return true;
+    }
+
+    private fun guardarEnMemoriaExterna(): Boolean{
+        try {
+            var rutaSD= Environment.getExternalStorageDirectory()
+            var archivoSD = File(rutaSD.absolutePath,textnombredoc.text.toString())
+            var flujosalidaSD = OutputStreamWriter(FileOutputStream(archivoSD))
+            var data = texto.text.toString()
+            flujosalidaSD.write(data)
+            flujosalidaSD.flush()
+            flujosalidaSD.close()
+        }catch (ioe:IOException){
+            return false
+        }
+        return true
     }
 
     private fun abrirDesdeMemoriaInterna(): Boolean {
