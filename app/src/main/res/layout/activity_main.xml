@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escribe una frase:"
+        android:textColor="@android:color/background_dark"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"/>
+
+    <EditText
+        android:id="@+id/texto"
+        android:layout_width="389dp"
+        android:layout_height="95dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:layout_marginLeft="10dp"/>
+
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp">
+
+        <RadioButton
+            android:id="@+id/rbmemoriaint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Archivo memoria Interna" />
+
+        <RadioButton
+            android:id="@+id/rbmemoriasd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Archivo memoria SD" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre de archivo:"
+        android:textColor="#000"
+        android:layout_marginLeft="20dp"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/textnombredoc"
+        android:layout_width="361dp"
+        android:layout_height="wrap_content"
+        android:ems="15"
+        android:inputType="textPersonName"
+        android:text="documento1.txt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/btnguardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Guardar"
+            android:layout_marginTop="30dp"/>
+
+        <Button
+            android:id="@+id/btnabrir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Abrir"
+            android:layout_marginTop="30dp"/>
+    </LinearLayout>
+
+</LinearLayout>
