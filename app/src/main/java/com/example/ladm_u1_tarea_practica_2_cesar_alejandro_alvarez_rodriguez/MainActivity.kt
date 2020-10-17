@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),0)
         }
 
+
         btnguardar.setOnClickListener {
             if(rbmemoriaint.isChecked){
                 if(guardarEnMemoriaInterna()==true){
