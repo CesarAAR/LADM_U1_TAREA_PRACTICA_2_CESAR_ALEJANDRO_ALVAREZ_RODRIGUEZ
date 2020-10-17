@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                         .setMessage("Se abrira el archivo").setPositiveButton("Ok"){d,i->d.dismiss()}
                         .show()
                 }else{
-                    android.app.AlertDialog.Builder(this).setTitle("ERROR").setMessage("No se abrio el archivo")
+                    android.app.AlertDialog.Builder(this).setTitle("ERROR").setMessage("No se encontro el archivo")
                         .setPositiveButton("Ok"){d,i-> d.dismiss()}.show()
                 }
             }
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                     AlertDialog.Builder(this).setTitle("Atencion").setMessage("Se abrio el archivo desde SD")
                         .setPositiveButton("Ok"){d,i-> d.dismiss()}.show()
                 }else{
-                    android.app.AlertDialog.Builder(this).setTitle("ERROR").setMessage("NO se pudo abrir el archivo")
+                    android.app.AlertDialog.Builder(this).setTitle("ERROR").setMessage("NO se encontro el archivo")
                         .setPositiveButton("Ok"){d,i-> d.dismiss()}.show()
                 }
             }
